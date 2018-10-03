@@ -69,7 +69,13 @@ module GoldenSection
 
     protected
     def f(x)
-      @func.call x
+      begin
+        y = @func.call x
+        raise Math::DomainError if y.is_a? Numeric
+      rescue Math::DomainError
+        puts "#{ERROR_COLOR_FOR_SHELL_START} Function not is defined on interval or return non numeric value #{ERROR_COLOR_FOR_SHELL_STOP}"
+        abort
+      end
     end
   end
 end
